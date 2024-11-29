@@ -31,9 +31,9 @@ for i in range(StudentNum):
 
 print("\nList of Students: ")
 print("ID\tName\tDoB")
-for i in range(StudentNum):
-	for j in range(3):
-		print(Students[i][j],end="\t")
+for row in Students:
+	for element in row:
+		print(element,end="\t")
 	print("")
 
 print("\nList of Courses: ")
