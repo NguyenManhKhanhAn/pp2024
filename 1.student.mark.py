@@ -25,10 +25,8 @@ for i in range(StudentNum):
 	print(f"\nSelect Course for Student {i+1}: ")
 
 	CourseName=input("Name: ")
-	Students[i]+=[CourseName]
 	CourseMark=int(input("Mark: "))
-	Students[i]+=[CourseMark]
-	CourseDict[CourseName]+=[Students[i][0],Students[i][1],Students[i][2],Students[i][4]]	
+	CourseDict[CourseName]+=[Students[i][0],Students[i][1],Students[i][2],CourseMark]	
 	#Key: CourseName, Value: Students[i] (Id, Name, DoB, Mark)
 
 print("\nList of Students: ")
@@ -49,5 +47,5 @@ for i in range(CourseNum):
 	print(f"\nCourse '{Courses[i][1]}': ")
 	print("ID\tName\tDoB\tMark")
 	for j in range(4):
-		print(CourseDict[str(Courses[i][1])][j],end="\t")
-	print("\n")
+		print(CourseDict[Courses[i][1]][j],end="\t")
+	print("")
