@@ -1,19 +1,26 @@
 class Info:
 	def __init__(self):
-		Id= int(input("Id: "))
-		Name= input("Name: ")
-		self.id= Id
-		self.name= Name
+		self.id= int(input("Id: "))
+		self.name= input("Name: ")
 		
 	def list(self, type):
-		print(f"\nList of {type}: ")
 		if type== "Student":
-			print("ID\tName\tDoB")
 			print(f"{self.id}\t{self.name}\t{self.dob}")
 		if type== "Course":
-			print("ID\tName")
 			print(f"{self.id}\t{self.name}")
 			
+class Course(Info):
+	def __init__(self):
+		super().__init__()
+		CourseDict.update({str(self.name):[]})
+	def list(self):
+		super().list("Course")
+	def studentList(self):
+		print(f"\nCourse '{self.name}': ")
+		print("ID\tName\tDoB\tMark")	
+		for j in range(4):
+			print(CourseDict[self.name][j],end="\t")
+
 
 class Student(Info):
 	def __init__(self):
@@ -22,23 +29,13 @@ class Student(Info):
 	def selectCourse(self):
 		self.course= input("Name: ")
 		self.mark= int(input("Mark: "))
+		CourseDict[self.course]+=[id, self.name, self.dob, self.mark]
 	def list(self):
 		super().list("Student")
-
-class Course(Info):
-	def list(self):
-		super().list("Course")
 
 def DisplayStudentInCourses(CourseNum, Courses, CourseDict):
 	for i in range (CourseNum):
 		CourseName = Courses[i][1]
-		print(f"\nCourse '{CourseName}': ")
-		print("ID\tName\tDoB\tMark")	
-
-		for j in range(4):
-			print(CourseDict[CourseName][j],end="\t")
-		print("")
-
 
 Students=[]
 Courses=[]
@@ -51,5 +48,13 @@ CourseNum= int(input("\nNumber of Courses: "))
 for i in range (CourseNum):
 	Courses.append(Course())
 
+print(f"\nList of Students: ")
+print("ID\tName\tDoB")
 for object in Students:
 	object.list()
+
+print(f"\nList of Courses: ")
+print("ID\tName")
+for object in Courses:
+	object.list()
+
