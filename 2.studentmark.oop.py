@@ -1,54 +1,33 @@
-class Student:
-	def __init__(self, id, name, dob):
-		self.id= id
-		self.name= name
-		self.dob= dob
-class Course:
-	def __init__(self, id, name):
-		self.id= id
-		self.name= name
+class Info:
+	def __init__(self):
+		Id= int(input("Id: "))
+		Name= input("Name: ")
+		self.id= Id
+		self.name= Name
+		
+	def list(self, type):
+		print(f"\nList of {type}: ")
+		if type== "Student":
+			print("ID\tName\tDoB")
+			print(f"{self.id}\t{self.name}\t{self.dob}")
+		if type== "Course":
+			print("ID\tName")
+			print(f"{self.id}\t{self.name}")
+			
 
-def AddStudent(StudentNum, Students):
-	for i in range(StudentNum):
-		print(f"\nStudent {i+1}: ")
+class Student(Info):
+	def __init__(self):
+		super().__init__()
+		self.dob= input("Date of Birth: ")
+	def selectCourse(self):
+		self.course= input("Name: ")
+		self.mark= int(input("Mark: "))
+	def list(self):
+		super().list("Student")
 
-		StudentId=int(input("Id: "))
-		StudentName=input("Name: ")
-		StudentDoB=input("Date of Birth: ")
-
-		Students.append([StudentId,StudentName,StudentDoB])
-
-def AddCourse(CourseNum, Courses, CourseDict):
-	for i in range(CourseNum):
-		print(f"\nCourse {i+1}: ")
-
-		CourseId=int(input("Id: "))
-		CourseName=input("Name: ")
-
-		Courses.append([CourseId,CourseName])
-		CourseDict.update({str(CourseName):[]})
-
-def SelectCourse(StudentNum, CourseName, Students, CourseDict):
-	for i in range(StudentNum):
-		print(f"\nSelect Course for Student {i+1}: ")
-
-		CourseName=input("Name: ")
-		CourseMark=int(input("Mark: "))
-		CourseDict[CourseName]+=[Students[i][0],Students[i][1],Students[i][2],CourseMark]	
-		#Key: CourseName, Value: Students[i] (Id, Name, DoB, Mark)
-
-def DisplayList(List, name):
-	print(f"\nList of {name}: ")
-
-	if name=="Students": 
-		print("ID\tName\tDoB")
-	if name=="Courses":
-		print("ID\tName")
-
-	for row in List:
-		for element in row:
-			print(element,end="\t")
-		print("")
+class Course(Info):
+	def list(self):
+		super().list("Course")
 
 def DisplayStudentInCourses(CourseNum, Courses, CourseDict):
 	for i in range (CourseNum):
@@ -65,14 +44,12 @@ Students=[]
 Courses=[]
 CourseDict={}
 
-StudentNum= int(input("Number of Students: "))
-AddStudent(StudentNum, Students)
+StudentNum= int(input("\nNumber of Students: "))
+for i in range (StudentNum):
+	Students.append(Student())
 CourseNum= int(input("\nNumber of Courses: "))
-AddCourse(CourseNum, Courses, CourseDict)
+for i in range (CourseNum):
+	Courses.append(Course())
 
-SelectCourse(StudentNum, CourseNum, Students, CourseDict)
-
-DisplayList(Students, "Students")
-DisplayList(Courses, "Courses")
-
-DisplayStudentInCourses(CourseNum, Courses, CourseDict)
+for object in Students:
+	object.list()
