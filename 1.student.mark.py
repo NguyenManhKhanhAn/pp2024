@@ -23,7 +23,7 @@ def SelectCourse(StudentNum, CourseName, Students, CourseDict):
 		print(f"\nSelect Course for Student {i+1}: ")
 
 		CourseName=input("Name: ")
-		CourseMark=int(input("Mark: "))
+		CourseMark=float(input("Mark: "))
 		CourseDict[CourseName]+=[Students[i][0],Students[i][1],Students[i][2],CourseMark]	
 		#Key: CourseName, Value: Students[i] (Id, Name, DoB, Mark)
 

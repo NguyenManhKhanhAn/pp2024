@@ -31,7 +31,7 @@ class Student(Info):
 
 	def selectCourse(self):
 		self.course= input("Name: ")
-		self.mark= int(input("Mark: "))
+		self.mark= float(input("Mark: "))
 		CourseDict[self.course]+=[self.id, self.name, self.dob, self.mark]
 	
 	def list(self):
