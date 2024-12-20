@@ -1,7 +1,8 @@
 class Info:
-	def __init__(self):
-		self.id= int(input("Id: "))
-		self.name= input("Name: ")
+	CourseDict={}
+	def __init__(self, id, name):
+		self.id= id
+		self.name= name
 		
 	def list(self, type):
 		if type== "Student":
@@ -10,9 +11,11 @@ class Info:
 			print(f"{self.id}\t{self.name}")
 			
 class Course(Info):
-	def __init__(self):
-		super().__init__()
-		CourseDict.update({str(self.name):[]})
+	Courses=[]
+	def __init__(self, id, name):
+		super().__init__(id, name)
+		Course.Courses.append(self)
+		Info.CourseDict.update({str(self.name):[]})
 
 	def list(self):
 		super().list("Course")
@@ -21,45 +24,43 @@ class Course(Info):
 		print(f"\nCourse '{self.name}': ")
 		print("ID\tName\tDoB\tMark")	
 		for j in range(4):
-			print(CourseDict[self.name][j],end="\t")
+			print(Info.CourseDict[self.name][j],end="\t")
 
 
 class Student(Info):
-	def __init__(self):
-		super().__init__()
-		self.dob= input("Date of Birth: ")
+	Students=[]
+	def __init__(self, id, name, dob):
+		super().__init__(id, name)
+		self.dob= dob
+		Student.Students.append(self)
 
 	def selectCourse(self):
 		self.course= input("Name: ")
 		self.mark= float(input("Mark: "))
-		CourseDict[self.course]+=[self.id, self.name, self.dob, self.mark]
+		Info.CourseDict[self.course]+=[self.id, self.name, self.dob, self.mark]
 	
 	def list(self):
 		super().list("Student")
 
 
-Students=[]
-Courses=[]
-CourseDict={}
-
 for i in range (int(input("\nNumber of Students: "))):
-	Students.append(Student())
+	Student(int(input("Id: ")), input("Name: "), input("Date of Birth: "))
 for i in range (int(input("\nNumber of Courses: "))):
-	Courses.append(Course())
+	Course(int(input("Id: ")), input("Name: "))
 
 print(f"\nList of Students: ")
 print("ID\tName\tDoB")
-for obj in Students:
+for obj in Student.Students:
 	obj.list()
 
 print(f"\nList of Courses: ")
 print("ID\tName")
-for obj in Courses:
+for obj in Course.Courses:
 	obj.list()
 
-for obj in Students:
+for obj in Student.Students:
 	print(f"\nSelect Course for Student ID {obj.id}: ")
 	obj.selectCourse()
 
-for obj in Courses:
+for obj in Course.Courses:
 	obj.studentList()
