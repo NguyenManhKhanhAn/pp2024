@@ -16,6 +16,7 @@ class Course(Info):
 		super().__init__(id, name)
 		Course.Courses.append(self)
 		Info.CourseDict.update({str(self.name):[]})
+		print("")
 
 	def list(self):
 		super().list("Course")
@@ -23,8 +24,9 @@ class Course(Info):
 	def studentList(self):
 		print(f"\nCourse '{self.name}': ")
 		print("ID\tName\tDoB\tMark")	
-		for j in range(4):
+		for j in range(1,4*Info.CourseDict[self.name][0]+1):
 			print(Info.CourseDict[self.name][j],end="\t")
+			if j%4==0: print("")
 
 
 class Student(Info):
@@ -33,10 +35,13 @@ class Student(Info):
 		super().__init__(id, name)
 		self.dob= dob
 		Student.Students.append(self)
+		print("")
 
 	def selectCourse(self):
 		self.course= input("Name: ")
 		self.mark= float(input("Mark: "))
+		if bool(not Info.CourseDict[self.course]): Info.CourseDict[self.course]+=[1]
+		else: Info.CourseDict[self.course][0]+=1
 		Info.CourseDict[self.course]+=[self.id, self.name, self.dob, self.mark]
 	
 	def list(self):
