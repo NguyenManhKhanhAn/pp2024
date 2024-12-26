@@ -26,7 +26,7 @@ def SelectCourse(StudentNum, CourseName, Students, CourseDict):
 		CourseMark=float(input("Mark: "))
 		if bool(not CourseDict[CourseName]): CourseDict[CourseName]+=[1]
 		else: CourseDict[CourseName][0]+=1
-		CourseDict[CourseName]+=[Students[i][0],Students[i][1],Students[i][2],CourseMark]	
+		CourseDict[CourseName]+=[[Students[i][0],Students[i][1],Students[i][2],CourseMark]]
 		#Key: CourseName, Value: Students[i] (Id, Name, DoB, Mark)
 
 def DisplayList(List, name):
@@ -48,9 +48,10 @@ def DisplayStudentInCourses(CourseNum, Courses, CourseDict):
 		StudentCount=CourseDict[CourseName][0]
 		print(f"\nCourse '{CourseName}': ")
 		print("ID\tName\tDoB\tMark")	
-		for j in range(1,StudentCount*4+1):
-			print(CourseDict[CourseName][j],end="\t")
-			if j%4==0: print("")
+		for j in range(1,StudentCount+1):
+			for k in range(4):
+				print(CourseDict[CourseName][j][k],end="\t")
+			print("")
 		print("")
 
 
