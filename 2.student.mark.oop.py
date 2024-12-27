@@ -1,72 +1,81 @@
 class Info:
-	CourseDict={}
-	def __init__(self, id, name):
-		self.id= id
-		self.name= name
-		
-	def list(self, type):
-		if type== "Student":
-			print(f"{self.id}\t{self.name}\t{self.dob}")
-		if type== "Course":
-			print(f"{self.id}\t{self.name}")
-			
-class Course(Info):
-	Courses=[]
-	def __init__(self, id, name):
-		super().__init__(id, name)
-		Course.Courses.append(self)
-		Info.CourseDict.update({str(self.name):[]})
-		print("")
-
+	def __init__(self):
+		self.id= int(input("ID: "))
+		self.name= input("Name: ")
 	def list(self):
-		super().list("Course")
+		print(f"{self.id}\t{self.name}")
+	def get_id(self):
+		return self.id
+	def get_name(self):
+		return self.name
 
-	def studentList(self):
-		print(f"\nCourse '{self.name}': ")
-		print("ID\tName\tDoB\tMark")	
-		for i in range(1,Info.CourseDict[self.name][0]+1):
-			for j in range(4):
-				print(Info.CourseDict[self.name][i][j],end="\t")
-			print("")
-
+class Course(Info):
+	def list(key, value):
+		print(f"{key}\t{value}")
 
 class Student(Info):
-	Students=[]
-	def __init__(self, id, name, dob):
-		super().__init__(id, name)
-		self.dob= dob
-		Student.Students.append(self)
-		print("")
-
+	def __init__(self):
+		super().__init__()
+		self.dob= input("Date of Birth: ")
+		self.course=""
+		self.mark=0
+	def get_course(self):
+		return self.course
+	def get_mark(self):
+		return self.mark
 	def selectCourse(self):
-		self.course= input("Name: ")
+		self.course= input("Course ID: ")
 		self.mark= float(input("Mark: "))
-		if bool(not Info.CourseDict[self.course]): Info.CourseDict[self.course]+=[1]
-		else: Info.CourseDict[self.course][0]+=1
-		Info.CourseDict[self.course]+=[[self.id, self.name, self.dob, self.mark]]
-	
 	def list(self):
-		super().list("Student")
+		print(f"{self.id}\t{self.name}\t{self.dob}")
 
 
-for i in range (int(input("\nNumber of Students: "))):
-	Student(int(input("Id: ")), input("Name: "), input("Date of Birth: "))
-for i in range (int(input("\nNumber of Courses: "))):
-	Course(int(input("Id: ")), input("Name: "))
+if __name__=="__main__":
+	Students=[]
+	Courses={}
 
-print(f"\nList of Students: ")
-print("ID\tName\tDoB")
-for obj in Student.Students:
-	obj.list()
-
-print(f"\nList of Courses: ")
-print("ID\tName")
-for obj in Course.Courses:
-	obj.list()
-
-for obj in Student.Students:
-	print(f"\nSelect Course for Student ID {obj.id}: ")
-	obj.selectCourse()
-
-for obj in Course.Courses:
-	obj.studentList()
+	while True:
+		print ("\nSelect one:")
+		print ("1. Add Student")
+		print ("2. Add Course")
+		print ("3. Select Course")
+		print ("4. Display Courses")
+		print ("5. Display Students")
+		print ("6. Display Students in a Course")
+		print ("7. Exit\n")
+		action= int(input())
+		match action:
+			case 1:
+				Students.append(Student())
+			case 2: 
+				temp=Course()
+				Courses.update({(temp.id):temp.name})
+			case 3: #
+				StID= int(input("\nSelect Course for Student ID: "))
+				for obj in Students:
+					if obj.id==StID:
+						obj.selectCourse()
+						obj.course=obj.get_course()
+						obj.mark=obj.get_mark()
+			case 4:
+				print(f"\nList of Courses: ")
+				print("ID\tName")
+				for key, value in Courses.items():
+					Course.list(key, value)
+			case 5:
+				print(f"\nList of Students: ")
+				print("ID\tName\tDoB")
+				for obj in Students:
+					obj.list()
+			case 6: #
+				CourseID=int(input("\nEnter Course ID: "))
+				for obj in Students:
+					if int(obj.course)==(CourseID):
+						print (f"{obj.id}\t{obj.name}\t{obj.dob}\t{obj.mark}")
+			case 7: 
+				print("Exiting...")
+				break
+			case _: 
+				print("Invalid Option")
+				for obj in Students:
+					print(f"{obj.id}\t{obj.name}\t{obj.dob}\t{obj.course}\t{obj.mark}")
