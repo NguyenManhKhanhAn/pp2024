@@ -1,6 +1,5 @@
 import math
 import numpy as np
-#import curses
 class Info:
 	def __init__(self):
 		self.__id= int(input("\nID: "))
